@@ -357,6 +357,10 @@ class stunnel (
       notify  => Service['stunnel']
     }
 
+    if $::use_simp_pki {
+      Class['pki'] ~> File["${_chroot}/etc/pki/cacerts"]
+    }
+
     File["${_chroot}/etc/resolv.conf"] -> Service['stunnel']
     File["${_chroot}/etc/nsswitch.conf"] -> Service['stunnel']
     File["${_chroot}/etc/hosts"] -> Service['stunnel']
